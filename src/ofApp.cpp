@@ -1,7 +1,9 @@
 #include "ofApp.h"
 #include "ofMesh.h"
 
-int xPos, yPos, innerRad = 100, outerRad = 150, rotation = 0;
+int xPosI, yPosI, zPosI, innerRad = 100;
+int xPosO, yPosO, zPosO, outerRad = 150;
+int rotation = 0;
 float zPos = 0.0;
 
 //--------------------------------------------------------------
@@ -17,45 +19,38 @@ void ofApp::setup()
 {
     for (int theta = 0; theta < 720; theta ++)
     {
-        if (theta %2==0)
-        {
-            xPos = innerRad * cos(theta);
-            yPos = innerRad * sin(theta);
-        } else
-        {
-            xPos = outerRad * cos(theta);
-            yPos = outerRad * sin(theta);
-        }
+        xPosI = innerRad * cos(theta);
+        yPosI = innerRad * sin(theta);
+        zPosI = 0.0;
+
+        xPosO = innerRad * cos(theta);
+        yPosO = innerRad * sin(theta);
+        zPosO = 50.0;
         
-        p.set(xPos, yPos, zPos);
+        p.set(xPosI, yPosI, zPosI);
+        ring.addVertex(p);
         
-        upperRing.addVertex(p);
-        upperRing.setupIndicesAuto();
-    
-        ofEnableDepthTest();
-    }
-    
-    for (int theta = 0; theta < 720; theta ++)
-    {
-        zPos = 50.0;
-        if (theta %2==0)
-        {
-            xPos = innerRad * cos(theta);
-            yPos = innerRad * sin(theta);
-        } else
-        {
-            xPos = outerRad * cos(theta);
-            yPos = outerRad * sin(theta);
-        }
+        p.set(xPosO, yPosO, zPosO);
+        ring.addVertex(p);
+
+        xPosO = outerRad * cos(theta);
+        yPosO = outerRad * sin(theta);
+        zPosO = 50.0;
         
-        p.set(xPos, yPos, zPos);
+        xPosI = outerRad * cos(theta);
+        yPosI = outerRad * sin(theta);
+        zPosI = 0.0;
         
-        lowerRing.addVertex(p);
-        lowerRing.setupIndicesAuto();
+        p.set(xPosI, yPosI, zPosI);
+        ring.addVertex(p);
+        
+        p.set(xPosO, yPosO, zPosO);
+        ring.addVertex(p);
+        
+        ring.setupIndicesAuto();
         
         ofEnableDepthTest();
     }
-    
 }
 
 //--------------------------------------------------------------
@@ -70,14 +65,8 @@ void ofApp::draw()
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     ofRotateY(rotation);
     
-    upperRing.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-    upperRing.draw();
-    
-    lowerRing.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-    lowerRing.draw();
-    
-//    sideRing.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-//    sideRing.draw();
+    ring.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
+    ring.draw();
 }
 
 //--------------------------------------------------------------

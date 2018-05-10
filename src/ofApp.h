@@ -5,7 +5,7 @@
 class ofApp : public ofBaseApp{
     
     ofPoint p;
-    ofMesh upperRing, lowerRing, sideRing;
+    ofMesh upperRing, lowerRing, sideRing, ring;
 
 	public:
         ~ofApp();
