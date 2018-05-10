@@ -5,7 +5,9 @@
 class ofApp : public ofBaseApp{
     
     ofPoint p;
-    ofMesh upperRing, lowerRing, sideRing, ring;
+    ofMesh ring;
+    
+    ofImage texture;
 
 	public:
         ~ofApp();

@@ -4,48 +4,51 @@
 int xPosI, yPosI, zPosI, innerRad = 100;
 int xPosO, yPosO, zPosO, outerRad = 150;
 int rotation = 0;
-float zPos = 0.0;
 
 //--------------------------------------------------------------
 ofApp::~ofApp()
 {
-    upperRing.clear();
-    lowerRing.clear();
-    sideRing.clear();
+    ring.clear();
 }
 
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-    for (int theta = 0; theta < 720; theta ++)
+    texture.load("flowers.jpg");
+    
+    for (float theta = 0.0; theta < 360; theta ++)
     {
         xPosI = innerRad * cos(theta);
         yPosI = innerRad * sin(theta);
-        zPosI = 0.0;
+        zPosI = 0;
 
         xPosO = innerRad * cos(theta);
         yPosO = innerRad * sin(theta);
-        zPosO = 50.0;
+        zPosO = 50;
         
         p.set(xPosI, yPosI, zPosI);
         ring.addVertex(p);
+        ring.addTexCoord(p);
         
         p.set(xPosO, yPosO, zPosO);
         ring.addVertex(p);
+        ring.addTexCoord(p);
 
         xPosO = outerRad * cos(theta);
         yPosO = outerRad * sin(theta);
-        zPosO = 50.0;
+        zPosO = 50;
         
         xPosI = outerRad * cos(theta);
         yPosI = outerRad * sin(theta);
-        zPosI = 0.0;
+        zPosI = 0;
         
         p.set(xPosI, yPosI, zPosI);
         ring.addVertex(p);
+        ring.addTexCoord(p);
         
         p.set(xPosO, yPosO, zPosO);
         ring.addVertex(p);
+        ring.addTexCoord(p);
         
         ring.setupIndicesAuto();
         
@@ -65,8 +68,12 @@ void ofApp::draw()
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     ofRotateY(rotation);
     
+    texture.bind();
+    
     ring.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-    ring.draw();
+    ring.drawFaces();
+    
+    texture.unbind();
 }
 
 //--------------------------------------------------------------
