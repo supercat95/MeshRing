@@ -1,22 +1,12 @@
 #pragma once
 
 #include "ofMain.h"
-#include <list>
-#include <vector>
-
-using std::list;
-using std::vector;
 
 class ofApp : public ofBaseApp{
     
-    ofMesh ring;
-    
-    ofPoint p, p1, p2, p3;
-    list<ofPoint> points;
-    vector<ofVec3f> vectors;
-    
-//    vector<int> r, g, b, degree, x, y, z;
-    
+    ofPoint p;
+    ofMesh upperRing, lowerRing, sideRing;
+
 	public:
         ~ofApp();
     
